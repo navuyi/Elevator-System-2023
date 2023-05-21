@@ -1,0 +1,13 @@
+@import "/src/config/style.config.scss";
+html, body{
+    @include styling-defaults;
+}
+
+#app-container{
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+
+    background-color: $blue-sapphire;
+}
+

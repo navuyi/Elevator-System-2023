@@ -1,0 +1,53 @@
+@import "../../../../config/style.config.scss";
+
+
+
+.elevatorCard{
+    width: 20%;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(205, 203, 203);
+}
+.head{
+    background-color: $blue-sapphire;
+    width: 100%;
+    color: whitesmoke;
+    text-align: center;
+    padding: 1em 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    user-select: none;
+
+    font-family: ubuntu-regular;
+    cursor: pointer;
+}
+.info{
+    padding: 0.5em 2em;
+}
+.infoItem{
+    font-family: ubuntu-regular;
+    font-size: $font-size-small;
+    margin: 5px 0;
+}
+.queue{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.queueItem{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center; align-items: center;
+    color: whitesmoke;
+    padding: 2px;
+    border-radius: 5px;
+    background-color: $blue-sapphire;
+}

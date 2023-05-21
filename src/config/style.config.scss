@@ -1,0 +1,77 @@
+// Ubuntu fonts
+@font-face{
+    font-family: "ubuntu-medium";
+    src: url("/src/assets/fonts/Ubuntu/Ubuntu-Medium.ttf") format("truetype");
+}
+@font-face{
+    font-family: "ubuntu-bold";
+    src: url("/src/assets/fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype");
+}
+@font-face{
+    font-family: "ubuntu-light";
+    src: url("/src/assets/fonts/Ubuntu/Ubuntu-Light.ttf") format("truetype");
+}
+@font-face{
+    font-family: "ubuntu-regular";
+    src: url("/src/assets/fonts/Ubuntu/Ubuntu-Regular.ttf") format("truetype");
+}
+
+// Times New Roman fonts
+@font-face {
+    font-family: "times-new-roman";
+    src: url("/src/assets/fonts/TimesNewRoman/TimesNewRoman.ttf") format("truetype");
+}
+@font-face {
+    font-family: "times-new-roman-bold";
+    src: url("/src/assets/fonts/TimesNewRoman/TimesNewRomanBold.ttf") format("truetype");
+}
+
+$font-size-enormous: 30px;
+$font-size-large: 24px;
+$font-size-medium: 20px;
+$font-size-small: 16px;
+
+$maximum-yellow-red: #ffc857ff;
+$viridian-green: #119da4ff;
+$blue-sapphire: #19647eff;
+$vivid-burgundy: #a4243bff;
+$claret: #7d1d3fff;
+
+// Makes container like html, body to span entire viewport 
+@mixin styling-defaults{
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+
+    font-family: ubuntu-regular;
+    font-size: 18px;
+}
+
+
+
+h1{
+    font-size: $font-size-large;
+    font-family: ubuntu-medium;
+    margin: 0; padding: 0;
+}
+h2{
+    font-size: $font-size-medium;
+    font-family: ubuntu-medium;
+    margin: 0; padding: 0;
+}
+h3{
+    font-size: $font-size-small;
+    font-family: ubuntu-regular;
+    margin: 0; padding: 0;
+}
+text{
+    font-size: 12px;
+    font-family: ubuntu-regular;
+    margin: 0; padding: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
