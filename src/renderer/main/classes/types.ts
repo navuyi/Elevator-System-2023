@@ -6,7 +6,7 @@ export type T_PICKUP_ORDER = {
     destinationFloor: number
 }
 
-export type T_ELEV_STATE = {
+export type T_ELEVATOR_STATE = {
     id: number
     currentFloor: number
     totalFloor: number

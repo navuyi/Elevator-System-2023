@@ -1,8 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { Routes } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
-import { Route } from 'react-router-dom';
+
 import "./style.scss"
 
 import { useEffect } from "react"
@@ -10,31 +8,34 @@ import ElevatorCard from './components/ElevatorCard/ElevatorCard';
 import style from "./style.module.scss"
 import { ElevatorSimulation } from './classes/ElevatorSimulation';
 import { useState } from "react"
-import { T_ELEV_STATE } from './classes/types';
-import { useActiveElevator } from './hooks/useActiveElevator';
+import { T_ELEVATOR_STATE } from './classes/types';
 import ControlPanel from './components/ControlPanel/ControlPanel';
+import {Provider, useSelector} from "react-redux"
+import store from './redux/store';
+import { useAppDispatch, useAppSelector } from './hooks/reduxTypedHooks';
+import { setElevators } from './redux/slices/simulationStateSlice';
+
 
 
 const App = () => {
-    const [elevState, setElevState] = useState<T_ELEV_STATE[]>([])
-    const {activeElevator, handleActiveElevatorSwitch} = useActiveElevator()
+    const dispatch = useAppDispatch()
+    const {elevators:elevatorStates} = useAppSelector(state => state.simulationState)
+    const {activeElevatorID} = useAppSelector(state => state.controlPanelState)
+    const simulation = new ElevatorSimulation(8, 15)
 
     useEffect(() => {
-        const simulation = new ElevatorSimulation(8, 15)
-
-        const state : T_ELEV_STATE[] = []
+        const _elevatorStates : T_ELEVATOR_STATE[] = []
         simulation.get_elevators().forEach(elevator => {
-            state.push(elevator.get_state())
+            _elevatorStates.push(elevator.get_state())
         })
-        setElevState(state)
-        console.log(state)
+        dispatch(setElevators(_elevatorStates))
     }, [])
     
     return(
         <div className={style.home}>
             <div className={style.col}>
                 {
-                    elevState.map((elevator, index) => {
+                    elevatorStates.map((elevator, index) => {
                         return (
                             <ElevatorCard 
                                 key={index}
@@ -44,9 +45,6 @@ const App = () => {
                                 direction={elevator.direction}
                                 totalFloor={elevator.totalFloor}
                                 queue={elevator.queue}
-
-                                activeElevator={activeElevator}
-                                handleActiveElevatorSwitch={handleActiveElevatorSwitch}
                             />
                         )
                     })
@@ -54,8 +52,7 @@ const App = () => {
             </div>
             <div className={style.col}>
                 <ControlPanel 
-                    activeElevator={activeElevator}
-                    elevState={elevState}
+                    elevators={simulation.get_elevators()}
                 />
             </div>
         </div>
@@ -64,9 +61,13 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById("app-container") as HTMLElement)
 
+
 function render() {
     root.render(
-      <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
+      
     )
 }
 

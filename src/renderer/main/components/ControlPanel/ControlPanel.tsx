@@ -1,30 +1,37 @@
 import React from "react";
 import style from "./style.module.scss"
-import { T_ELEV_STATE } from "../../classes/types";
+import { T_ELEVATOR_STATE } from "../../classes/types";
+import { useControlPanel } from "./useControlPanel";
+import { Elevator } from "../../classes/Elevator";
+import { useAppSelector } from "../../hooks/reduxTypedHooks";
 
 type T_PROPS = {
-    activeElevator: number
-    elevState: T_ELEV_STATE[]
+    elevators: Elevator[]
 }
 
 const ControlPanel = (props:T_PROPS) => {
+    const {elevators:elevatorStates} = useAppSelector(state => state.simulationState)
+    const {activeElevatorID, pickupFloor, destinationFloor} = useAppSelector(state => state.controlPanelState)
+    const {handleElevatorPickupOrder, handlePickupFloorChange, handleDestinationFloorChange} = useControlPanel(props.elevators)
+
     return(
         <div className={style.controlPanel}>
             <div className={style.container}>
                 <h1>Elevator Control Panel</h1>
-                <h2>Active elevator: {props.activeElevator+1}</h2>
-                <h3>Elevator's current floor: {props.elevState.length !== 0 ? props.elevState.find(elev => elev.id === props.activeElevator).currentFloor : null}</h3>
+                <h2>Active elevator: {activeElevatorID+1}</h2>
+                <h3>Elevator's current floor: {elevatorStates.length !== 0 ? elevatorStates.find(elev => elev.id === activeElevatorID).currentFloor : null}</h3>
             </div>
             <div className={style.container}>
                 <h1>Create an order</h1>
                 <div className={style.wrapper}>
-                    <h3>Floor: </h3> <input className={style.input} type="number"/>
+                    <h3>Pickup Floor: </h3> <input className={style.input} type="number" value={pickupFloor} onChange={handlePickupFloorChange}/>
                 </div>
                 <div className={style.wrapper}>
-                    <h3>Num. of people: </h3> <input className={style.input} type="number"/>
+                    <h3>Destination Floor: </h3> <input className={style.input} type="number" value={destinationFloor} onChange={handleDestinationFloorChange}/>
                 </div>
+                
                 <div className={style.wrapper}>
-                    <button>Enter</button>
+                    <button onClick={handleElevatorPickupOrder}>Enter</button>
                 </div>
             </div>
             <div className={style.container}>

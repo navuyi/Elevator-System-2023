@@ -1,5 +1,5 @@
 import { Request } from "electron"
-import { T_ELEV_STATE, T_PICKUP_ORDER } from "./types"
+import { T_ELEVATOR_STATE, T_PICKUP_ORDER } from "./types"
 
 
 
@@ -57,7 +57,7 @@ export class Elevator {
         }
     }
 
-    public get_state = () : T_ELEV_STATE => {
+    public get_state = () : T_ELEVATOR_STATE => {
         return {
             id: this.id,
             currentFloor: this.currentFloor,
