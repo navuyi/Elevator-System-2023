@@ -1,22 +1,17 @@
 import { TOTAL_FLOORS } from "../../config/config";
+import { T_LOCATION } from "../../hooks/useElevatorSystem";
 import style from "./style.module.scss"
 import { useControlPanel } from "./useControlPanel";
 
 type T_PROPS = {
     activeElevatorID: number
-    addToQueue: (id: number, floor:number) => void
-    addToLobby: (id: number, pickupFloor: number, dstFloor: number) => void
+    addToQueue: (id: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => void
     updateSimulation: () => void
 }
 
 const ControlPanel = (props:T_PROPS) => {
     const {handlePickupFloorChange, handleDestinationFloorChange, pickupFloor, destinationFloor} = useControlPanel()
-
-    const handleElevatorPickupOrder = () => {
-        props.addToQueue(props.activeElevatorID, pickupFloor)
-        props.addToLobby(props.activeElevatorID, pickupFloor, destinationFloor)
-    }
-
+    
     return(
         <div className={style.controlPanel}>
             <div className={style.container}>
@@ -33,7 +28,7 @@ const ControlPanel = (props:T_PROPS) => {
                 </div>
                 
                 <div className={style.wrapper}>
-                    <button onClick={handleElevatorPickupOrder} className={style.button}>Enter</button>
+                    <button onClick={() => props.addToQueue(props.activeElevatorID, pickupFloor, destinationFloor, "lobby")} className={style.button}>Enter</button>
                 </div>
             </div>
             <div className={style.container}>

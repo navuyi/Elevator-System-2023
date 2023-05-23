@@ -1,17 +1,18 @@
 import { useState } from "react"
 
-export type T_DIRECTION = "idle" | "down" | "up"
+export type T_LOCATION = "elevator" | "lobby"
 
-export interface I_PICKUP_ORDER {
+export interface I_PERSON {
     pickupFloor: number
     destinationFloor: number
+    direction: number // <-- depends on pickupFloor and destinationFloor
+    location: T_LOCATION // <-- whether person is inside or waiting for the elevator
 }
 
 export interface I_ELEVATOR {
     currentFloor: number
-    direction: T_DIRECTION
-    queue: number[]
-    lobby: I_PICKUP_ORDER[]
+    direction: number
+    queue: I_PERSON[]
 }
 
 export const useElevatorSystem = (numOfElevators:number) => {
@@ -22,38 +23,26 @@ export const useElevatorSystem = (numOfElevators:number) => {
         for(let i=0; i<numOfElevators; i++){
             tmp.push({
                 currentFloor: 0,
-                direction: "idle",
-                queue: [],
-                lobby: []
+                direction: 0,
+                queue: []
             })
         }
         setElevators(tmp)
     }
 
-    const addToQueue = (index: number, floor:number) => {
+    const addToQueue = (index: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => {
         const tmp = [...elevators]
-        tmp[index].queue.push(floor)
+        tmp[index].queue.push({
+            pickupFloor: pickupFloor,
+            destinationFloor: dstFloor,
+            location: location,
+            direction: dstFloor - pickupFloor
+        })
         setElevators(tmp)
     }
-    const addToLobby = (index: number, pickupFloor: number, destinationFloor: number) => {
-        const tmp = [...elevators]
-        tmp[index].lobby.push({pickupFloor, destinationFloor})
-        setElevators(tmp)
-    }
+    
 
-    const updateDirection = (elevator:I_ELEVATOR) => {
-        const vec = elevator.queue[0] - elevator.currentFloor
-        if(vec === 0) elevator.direction = "idle";
-        else if(vec < 0) elevator.direction = "down";
-        else if(vec > 0) elevator.direction = "up"
-    }
-
-    const moveFloor = (elevator:I_ELEVATOR) => {
-        if(elevator.direction === "down") elevator.currentFloor -= 1;
-        else if(elevator.direction === "up") elevator.currentFloor += 1;
-        else if(elevator.direction === "idle") return ;
-    }
-
+    /* 
     const update = () => {
         const tmp = [...elevators]
         tmp.forEach(elev => {
@@ -82,10 +71,47 @@ export const useElevatorSystem = (numOfElevators:number) => {
         })
         setElevators(tmp)
     }
+    */
+
+    const update = () => {
+        const tmp = [...elevators]
+        tmp.forEach(elev => {
+            if(elev.direction === 0){
+                if(elev.queue.length !== 0){
+                    // Elevator is idle but queue is not empty - designating direction
+                    
+                }
+            }
+            else{
+                if(elev.queue.length !== 0){
+                    // Queue is not empty - elevator travels in dedicated direction
+                    if(elev.direction > 0){
+                        elev.currentFloor += 1;
+                        // Take in 
+                        
+                        // Drop out 
+                        
+                        
+
+                        // Check if there are still
+                    }
+                    else if(elev.direction < 0){
+                        elev.currentFloor -= 1;
+                    }
+                }
+                else{
+                    // Queue is empty - elvator becomes idle
+                    elev.direction = 0
+                    return
+                }
+            }  
+        })
+        setElevators(tmp)
+    }
 
     return {
         elevators,
-        addToQueue, addToLobby, update,
+        addToQueue, update,
         init
     }
 }

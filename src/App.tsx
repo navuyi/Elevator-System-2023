@@ -10,7 +10,7 @@ import { NUMBER_OF_ELEVATORS, TOTAL_FLOORS } from "./config/config"
 
 
 const App = () => {
-  const {elevators, init, addToLobby, addToQueue, update} = useElevatorSystem(NUMBER_OF_ELEVATORS)
+  const {elevators, init, addToQueue, update} = useElevatorSystem(NUMBER_OF_ELEVATORS)
   const [activeElevatorID, setActiveElevatorID] = useState(0)
 
   useEffect(() => {
@@ -41,7 +41,6 @@ const App = () => {
       <div className={style.col}>
         <ControlPanel 
           activeElevatorID={activeElevatorID}
-          addToLobby={addToLobby}
           addToQueue={addToQueue}
           updateSimulation={update}
         />
