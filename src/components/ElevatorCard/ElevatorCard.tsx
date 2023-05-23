@@ -19,7 +19,7 @@ const ElevatorCard = (props:T_PROPS) => {
    
     return(
         <div className={style.elevatorCard}>
-            <span className={style.head} onClick={() => props.setActiveElevatorID(props.id)} style={{backgroundColor: props.activeElevatorID === props.id ? COLOR.maximum_yellow_red : COLOR.blue_sapphire}}> {props.id+1} </span>
+            <span className={style.head}> {props.id+1} </span>
             <div className={style.info}>
                 <div className={style.infoItem}>Floor: {props.currentFloor}/{props.totalFloor}</div>
                 <div className={style.infoItem}>Direction: {props.direction}</div>

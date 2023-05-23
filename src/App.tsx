@@ -7,10 +7,8 @@ import ControlPanel from "./components/ControlPanel/ControlPanel"
 import { NUMBER_OF_ELEVATORS, TOTAL_FLOORS } from "./config/config"
 
 
-
-
 const App = () => {
-  const {elevators, init, addToQueue, update} = useElevatorSystem(NUMBER_OF_ELEVATORS)
+  const {elevators, init, handlePickupOrder, update} = useElevatorSystem(NUMBER_OF_ELEVATORS)
   const [activeElevatorID, setActiveElevatorID] = useState(0)
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const App = () => {
         <ControlPanel 
           currentFloor={elevators[activeElevatorID]?.currentFloor}
           activeElevatorID={activeElevatorID}
-          addToQueue={addToQueue}
+          handlePickupOrder={handlePickupOrder}
           updateSimulation={update}
         />
       </div>
