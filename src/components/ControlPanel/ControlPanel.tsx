@@ -3,9 +3,7 @@ import style from "./style.module.scss"
 import { useControlPanel } from "./useControlPanel";
 
 type T_PROPS = {
-    currentFloor : number
-    activeElevatorID: number
-    handlePickupOrder: (id: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => void
+    handlePickupOrder: (pickupFloor: number, dstFloor: number, location: T_LOCATION) => void
     updateSimulation: () => void
 }
 
@@ -24,7 +22,7 @@ const ControlPanel = (props:T_PROPS) => {
                 </div>
                 
                 <div className={style.wrapper}>
-                    <button onClick={() => props.handlePickupOrder(props.activeElevatorID, pickupFloor, destinationFloor, "lobby")} className={style.button}>Enter</button>
+                    <button onClick={() => props.handlePickupOrder(pickupFloor, destinationFloor, "lobby")} className={style.button}>Enter</button>
                 </div>
             </div>
             <div className={style.container}>

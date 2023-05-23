@@ -20,7 +20,6 @@ export interface I_ELEVATOR {
 export const useElevatorSystem = (numOfElevators:number) => {
     const [elevators, setElevators] = useState<I_ELEVATOR[]>([])
     
-
     const init = () => {
         const tmp : I_ELEVATOR[] = []
         for(let i=0; i<numOfElevators; i++){
@@ -33,7 +32,7 @@ export const useElevatorSystem = (numOfElevators:number) => {
         setElevators(tmp)
     }
 
-    const findBestElevator = (pickupFloor:number, destinationFloor: number) : number => {
+    const findBestElevator = (pickupFloor:number) : number => {
         const _elevators = [...elevators]
         let shortestSeekTime = Number.POSITIVE_INFINITY
         let bestElevators : I_ELEVATOR[] = []
@@ -57,8 +56,8 @@ export const useElevatorSystem = (numOfElevators:number) => {
         return _elevators.indexOf(leastOccupiedElevator)
     }   
 
-    const handlePickupOrder = (index: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => {
-        const indexOfBestElevator = findBestElevator(pickupFloor, dstFloor)
+    const handlePickupOrder = (pickupFloor: number, dstFloor: number, location: T_LOCATION) => {
+        const indexOfBestElevator = findBestElevator(pickupFloor)
         const tmp = [...elevators]
         
         tmp[indexOfBestElevator].queue.push({

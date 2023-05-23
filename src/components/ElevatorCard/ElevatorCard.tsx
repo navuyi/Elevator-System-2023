@@ -10,9 +10,6 @@ type T_PROPS = {
     totalFloor: number
     direction: T_DIRECTION
     queue: I_PERSON[]
-
-    setActiveElevatorID: (id:number) => void
-    activeElevatorID: number
 }
 
 const ElevatorCard = (props:T_PROPS) => {
