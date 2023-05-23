@@ -53,7 +53,8 @@ export const useElevatorSystem = (numOfElevators:number) => {
             }
         }
         const closestElevators = bestElevators.filter(elev => Math.abs(elev.currentFloor - pickupFloor) === shortestSeekTime)
-        return _elevators.indexOf(closestElevators[0])
+        const leastOccupiedElevator = closestElevators.sort((a,b) => a.queue.length - b.queue.length)[0]
+        return _elevators.indexOf(leastOccupiedElevator)
     }   
 
     const handlePickupOrder = (index: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => {
