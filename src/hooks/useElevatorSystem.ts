@@ -46,10 +46,11 @@ export const useElevatorSystem = (numOfElevators:number) => {
         const tmp = [...elevators]
         tmp.forEach(elev => {
             if(elev.direction === "idle"){
-                console.log("IDLE")
                 if(elev.queue.length !== 0){
-                    // Elevator is idle but queue is not empty - designating direction
+                    // Select all orders from floor that was requested first
+                    const orders = elev.queue.filter(person => person.pickupFloor === elev.queue[0].pickupFloor)
                     if(elev.currentFloor === elev.queue[0].pickupFloor){
+                        orders.forEach(person => person.location = "elevator")
                         const vec = elev.queue[0].destinationFloor - elev.currentFloor
                         if(vec > 0) elev.direction = "up"
                         else if(vec < 0) elev.direction = "down"
