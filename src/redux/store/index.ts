@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { simulationStateReducer } from "../slices/simulationStateSlice";
-import { controlPanelReducer } from "../slices/controlPanelStateSlice";
+
 
 export const store = configureStore({
     reducer: {
-        simulationState: simulationStateReducer,
-        controlPanelState: controlPanelReducer
+       
     }
 })
 

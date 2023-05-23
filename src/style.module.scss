@@ -1,11 +1,10 @@
 @import "/src/config/style.config.scss";
 
-.home{
+.app{
     @include styling-defaults;
 
     display: flex;
     flex-direction: row;
-
     background-color: whitesmoke;
 }
 .col{

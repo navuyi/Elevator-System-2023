@@ -1,0 +1,58 @@
+@import "../../config/style.config.scss";
+
+
+
+.controlPanel{
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2px;
+}
+.input{
+    width: 35%;
+    outline: none;
+    border: none;
+    padding: 5px 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-family: ubuntu-regular;
+}
+.input:focus{
+    border-color: $maximum-yellow-red;
+}
+
+.button{
+    width: 40%;
+    outline: none;
+    background-color: $vivid-burgundy;
+    color: white;
+
+    font-size: $font-size-small;
+    font-family: ubuntu-regular;
+    border: none;
+
+    border-radius: 5px;
+    padding: 10px 0;
+
+    cursor: pointer;
+}
+.button:hover{
+    filter: brightness(0.9)
+}
+.button:active{
+    transform: translate(1px, 2px);
+}
