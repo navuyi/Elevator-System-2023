@@ -4,6 +4,7 @@ import style from "./style.module.scss"
 import { useControlPanel } from "./useControlPanel";
 
 type T_PROPS = {
+    currentFloor : number
     activeElevatorID: number
     addToQueue: (id: number, pickupFloor: number, dstFloor: number, location: T_LOCATION) => void
     updateSimulation: () => void
@@ -28,7 +29,7 @@ const ControlPanel = (props:T_PROPS) => {
                 </div>
                 
                 <div className={style.wrapper}>
-                    <button onClick={() => props.addToQueue(props.activeElevatorID, pickupFloor, destinationFloor, "lobby")} className={style.button}>Enter</button>
+                    <button onClick={() => props.addToQueue(props.activeElevatorID, pickupFloor, destinationFloor, props.currentFloor === pickupFloor ? "elevator" : "lobby")} className={style.button}>Enter</button>
                 </div>
             </div>
             <div className={style.container}>

@@ -40,6 +40,7 @@ const App = () => {
       </div>
       <div className={style.col}>
         <ControlPanel 
+          currentFloor={elevators[activeElevatorID]?.currentFloor}
           activeElevatorID={activeElevatorID}
           addToQueue={addToQueue}
           updateSimulation={update}

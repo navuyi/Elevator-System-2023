@@ -1,17 +1,18 @@
 import { useState } from "react"
 
 export type T_LOCATION = "elevator" | "lobby"
+export type T_DIRECTION = "idle" | "down" | "up"
 
 export interface I_PERSON {
     pickupFloor: number
     destinationFloor: number
-    direction: number // <-- depends on pickupFloor and destinationFloor
+    direction: "up" | "down" // <-- depends on pickupFloor and destinationFloor
     location: T_LOCATION // <-- whether person is inside or waiting for the elevator
 }
 
 export interface I_ELEVATOR {
     currentFloor: number
-    direction: number
+    direction: T_DIRECTION
     queue: I_PERSON[]
 }
 
@@ -23,7 +24,7 @@ export const useElevatorSystem = (numOfElevators:number) => {
         for(let i=0; i<numOfElevators; i++){
             tmp.push({
                 currentFloor: 0,
-                direction: 0,
+                direction: "idle",
                 queue: []
             })
         }
@@ -36,72 +37,90 @@ export const useElevatorSystem = (numOfElevators:number) => {
             pickupFloor: pickupFloor,
             destinationFloor: dstFloor,
             location: location,
-            direction: dstFloor - pickupFloor
+            direction: dstFloor - pickupFloor > 0 ? "up" : "down"
         })
         setElevators(tmp)
     }
     
-
-    /* 
     const update = () => {
         const tmp = [...elevators]
         tmp.forEach(elev => {
-            if(elev.queue.length === 0){
-                return
-            }
-
-            updateDirection(elev)
-            moveFloor(elev)
-
-            // Remove all occurences of the floor from the queue
-            elev.queue = elev.queue.filter(floor => floor !== elev.currentFloor)
-            
-            // Check if there are requests in the lobby with the srcFloor of the current floor
-            for (let i = elev.lobby.length - 1; i >= 0; i--) {
-                const order = elev.lobby[i]
-                if(order.pickupFloor === elev.currentFloor){
-                    elev.queue.push(order.destinationFloor)
-                    elev.lobby.splice(i, 1)
-                }    
-            }
-            if(elev.queue.length === 0){
-                elev.direction = "idle"
-            }
-            
-        })
-        setElevators(tmp)
-    }
-    */
-
-    const update = () => {
-        const tmp = [...elevators]
-        tmp.forEach(elev => {
-            if(elev.direction === 0){
+            if(elev.direction === "idle"){
+                console.log("IDLE")
                 if(elev.queue.length !== 0){
                     // Elevator is idle but queue is not empty - designating direction
-                    
+                    if(elev.currentFloor === elev.queue[0].pickupFloor){
+                        const vec = elev.queue[0].destinationFloor - elev.currentFloor
+                        if(vec > 0) elev.direction = "up"
+                        else if(vec < 0) elev.direction = "down"
+                    }else{
+                        const vec = elev.queue[0].pickupFloor - elev.currentFloor
+                        if(vec > 0) elev.direction = "up"
+                        else if(vec < 0) elev.direction = "down"
+                    }
                 }
             }
             else{
                 if(elev.queue.length !== 0){
                     // Queue is not empty - elevator travels in dedicated direction
-                    if(elev.direction > 0){
+                    if(elev.direction === "up"){
                         elev.currentFloor += 1;
-                        // Take in 
-                        
-                        // Drop out 
-                        
-                        
 
-                        // Check if there are still
+                        if(elev.queue.some(person => person.pickupFloor > elev.currentFloor || person.destinationFloor > elev.currentFloor) === false){
+                            if(elev.queue.length === 0) elev.direction = "idle";
+                            else if(elev.queue.length !== 0) elev.direction = "down"
+                        }
+
+                        // Take in 
+                        elev.queue.forEach(person => {
+                            if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction){
+                                person.location = "elevator"
+                            } 
+                        })
+                        // Drop out 
+                        for (let i = elev.queue.length - 1; i >= 0; i--) {
+                            const person = elev.queue[i]
+                            if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
+                                elev.queue.splice(i, 1)
+                            }
+                        }
+
+                        if(elev.queue.some(person => person.pickupFloor > elev.currentFloor || person.destinationFloor > elev.currentFloor) === false){
+                            if(elev.queue.length === 0) elev.direction = "idle";
+                            else if(elev.queue.length !== 0) elev.direction = "down"
+                        }
                     }
-                    else if(elev.direction < 0){
+                    else if(elev.direction === "down"){
                         elev.currentFloor -= 1;
+
+                        if(elev.queue.some(person => person.pickupFloor < elev.currentFloor || person.destinationFloor < elev.currentFloor) === false){
+                            if(elev.queue.length === 0) elev.direction = "idle";
+                            else if(elev.queue.length !== 0) elev.direction = "up"
+                        }
+
+                        // Take in 
+                        elev.queue.forEach(person => {
+                            if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction){
+                                person.location = "elevator"
+                            } 
+                        })
+                        // Drop out 
+                        for (let i = elev.queue.length - 1; i >= 0; i--) {
+                            const person = elev.queue[i]
+                            if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
+                                elev.queue.splice(i, 1)
+                            }
+                        }
+
+                        if(elev.queue.some(person => person.pickupFloor < elev.currentFloor || person.destinationFloor < elev.currentFloor) === false){
+                            if(elev.queue.length === 0) elev.direction = "idle";
+                            else if(elev.queue.length !== 0) elev.direction = "up"
+                        }
                     }
                 }
                 else{
                     // Queue is empty - elvator becomes idle
-                    elev.direction = 0
+                    elev.direction = "idle"
                     return
                 }
             }  
