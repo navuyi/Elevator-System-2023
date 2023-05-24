@@ -37,15 +37,15 @@ export const updateElevatorDirectionMovingDown = (elev:I_ELEVATOR) => {
     }
 }
 
-export const takePeopleIn = (elev:I_ELEVATOR) => {
+export const takePeopleIn = (elev:I_ELEVATOR, limit:number) => {
     elev.queue.forEach(person => {
-        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction && elev.queue.filter(p => p.location === "elevator").length < ELEVATOR_BODY_LIMIT){
+        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction && elev.queue.filter(p => p.location === "elevator").length < limit){
             person.location = "elevator"
         } 
     })
 }
 
-export const dropPeopleOut = (elev:I_ELEVATOR) => {
+export const dropPeopleOut = (elev:I_ELEVATOR,) => {
     for (let i = elev.queue.length - 1; i >= 0; i--) {
         const person = elev.queue[i]
         if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
@@ -66,7 +66,7 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
 
                 updateElevatorDirectionMovingUp(elev)
 
-                takePeopleIn(elev)                
+                takePeopleIn(elev, ELEVATOR_BODY_LIMIT)                
                 dropPeopleOut(elev)
 
                 updateElevatorDirectionMovingUp(elev)
@@ -76,7 +76,7 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
 
                 updateElevatorDirectionMovingDown(elev)
 
-                takePeopleIn(elev)
+                takePeopleIn(elev, ELEVATOR_BODY_LIMIT)
                 dropPeopleOut(elev)
 
                 updateElevatorDirectionMovingDown(elev)
