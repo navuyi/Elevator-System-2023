@@ -1,3 +1,4 @@
+import { ELEVATOR_BODY_LIMIT } from "../config/config";
 import { I_ELEVATOR } from "./useElevatorSystem";
 
 
@@ -32,6 +33,23 @@ export const updateElevatorDirectionMovingDown = (elev:I_ELEVATOR) => {
     }
 }
 
+export const takePeopleIn = (elev:I_ELEVATOR) => {
+    elev.queue.forEach(person => {
+        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction && elev.queue.filter(p => p.location === "elevator").length < ELEVATOR_BODY_LIMIT){
+            person.location = "elevator"
+        } 
+    })
+}
+
+export const dropPeopleOut = (elev:I_ELEVATOR) => {
+    for (let i = elev.queue.length - 1; i >= 0; i--) {
+        const person = elev.queue[i]
+        if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
+            elev.queue.splice(i, 1)
+        }
+    }
+}
+
 export const updateElevatorState = (elev:I_ELEVATOR) => {
     if(elev.direction === "idle"){
         updateElevatorDirection(elev)
@@ -44,19 +62,8 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
 
                 updateElevatorDirectionMovingUp(elev)
 
-                // Take in 
-                elev.queue.forEach(person => {
-                    if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction){
-                        person.location = "elevator"
-                    } 
-                })
-                // Drop out 
-                for (let i = elev.queue.length - 1; i >= 0; i--) {
-                    const person = elev.queue[i]
-                    if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
-                        elev.queue.splice(i, 1)
-                    }
-                }
+                takePeopleIn(elev)                
+                dropPeopleOut(elev)
 
                 updateElevatorDirectionMovingUp(elev)
             }
@@ -65,19 +72,8 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
 
                 updateElevatorDirectionMovingDown(elev)
 
-                // Take in 
-                elev.queue.forEach(person => {
-                    if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction){
-                        person.location = "elevator"
-                    } 
-                })
-                // Drop out 
-                for (let i = elev.queue.length - 1; i >= 0; i--) {
-                    const person = elev.queue[i]
-                    if(person.location === "elevator" && elev.currentFloor === person.destinationFloor){
-                        elev.queue.splice(i, 1)
-                    }
-                }
+                takePeopleIn(elev)
+                dropPeopleOut(elev)
 
                 updateElevatorDirectionMovingDown(elev)
             }
