@@ -7,7 +7,11 @@ export const updateElevatorDirection = (elev:I_ELEVATOR) => {
     else{
         if(elev.currentFloor === elev.queue[0].pickupFloor){
             const firstpickupOrders = elev.queue.filter(person => person.pickupFloor === elev.queue[0].pickupFloor)
-            firstpickupOrders.forEach(person => person.location = "elevator")
+            firstpickupOrders.forEach(person => {
+                if(elev.queue.filter(p => p.location === "elevator").length < ELEVATOR_BODY_LIMIT){
+                    person.location = "elevator"
+                }
+            })
             const vec = elev.queue[0].destinationFloor - elev.currentFloor
             if(vec > 0) elev.direction = "up"
             else if(vec < 0) elev.direction = "down"
