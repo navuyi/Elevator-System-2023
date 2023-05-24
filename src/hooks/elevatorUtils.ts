@@ -45,8 +45,12 @@ export const updateElevatorDirectionMovingDown = (elev:I_ELEVATOR) => {
 }
 
 export const takePeopleIn = (elev:I_ELEVATOR, limit:number) => {
+    // Change elevator's diretion in case there is only one floor requested
+    if([...new Set(elev.queue.map(p => p.pickupFloor))].length === 1){
+        elev.direction = elev.queue[0].direction
+    }
     elev.queue.forEach(person => {
-        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && elev.queue.filter(p => p.location === "elevator").length < limit){
+        if(person.location === "lobby" && elev.direction === person.direction && elev.currentFloor === person.pickupFloor && elev.queue.filter(p => p.location === "elevator").length < limit){
             person.location = "elevator"
         } 
     })
@@ -71,12 +75,14 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
             if(elev.direction === "up"){
                 elev.currentFloor += 1;
                 dropPeopleOut(elev)
+                
                 takePeopleIn(elev, ELEVATOR_BODY_LIMIT) 
                 updateElevatorDirectionMovingUp(elev)
             }
             else if(elev.direction === "down"){
                 elev.currentFloor -= 1;
                 dropPeopleOut(elev)
+               
                 takePeopleIn(elev, ELEVATOR_BODY_LIMIT)
                 updateElevatorDirectionMovingDown(elev)
             }
