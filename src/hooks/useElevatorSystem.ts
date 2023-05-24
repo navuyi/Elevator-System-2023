@@ -67,7 +67,7 @@ export const useElevatorSystem = (numOfElevators:number) => {
             direction: dstFloor - pickupFloor > 0 ? "up" : "down"
         })
 
-        updateElevatorDirection(tmp[indexOfBestElevator])
+        //updateElevatorDirection(tmp[indexOfBestElevator])
 
         setElevators(tmp)
     }

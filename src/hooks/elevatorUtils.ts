@@ -24,22 +24,29 @@ export const updateElevatorDirection = (elev:I_ELEVATOR) => {
 }
 
 export const updateElevatorDirectionMovingUp = (elev:I_ELEVATOR) => {
-    if(elev.queue.some(person => person.pickupFloor > elev.currentFloor || person.destinationFloor > elev.currentFloor) === false){
-        if(elev.queue.length === 0) elev.direction = "idle";
-        else if(elev.queue.length !== 0) elev.direction = "down"
+    if(elev.queue.length === 0){
+        elev.direction = "idle"
+    }
+    else{
+        if(elev.queue.some(p => p.pickupFloor > elev.currentFloor && p.location === "lobby")) elev.direction="up";
+        else if(elev.queue.some(p => p.destinationFloor > elev.currentFloor && p.location==="elevator")) elev.direction="up";
+        else elev.direction = "down"
     }
 }
 
 export const updateElevatorDirectionMovingDown = (elev:I_ELEVATOR) => {
-    if(elev.queue.some(person => person.pickupFloor < elev.currentFloor || person.destinationFloor < elev.currentFloor) === false){
-        if(elev.queue.length === 0) elev.direction = "idle";
-        else if(elev.queue.length !== 0) elev.direction = "up"
+    if(elev.queue.length === 0){
+        elev.direction = "idle"
+    }else{
+        if(elev.queue.some(p => p.pickupFloor < elev.currentFloor && p.location === "lobby")) elev.direction="down";
+        else if(elev.queue.some(p => p.destinationFloor < elev.currentFloor && p.location==="elevator")) elev.direction="down";
+        else elev.direction = "up"
     }
 }
 
 export const takePeopleIn = (elev:I_ELEVATOR, limit:number) => {
     elev.queue.forEach(person => {
-        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && person.direction == elev.direction && elev.queue.filter(p => p.location === "elevator").length < limit){
+        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor  && elev.queue.filter(p => p.location === "elevator").length < limit){
             person.location = "elevator"
         } 
     })
@@ -63,22 +70,14 @@ export const updateElevatorState = (elev:I_ELEVATOR) => {
             // Queue is not empty - elevator travels in dedicated direction
             if(elev.direction === "up"){
                 elev.currentFloor += 1;
-
-                updateElevatorDirectionMovingUp(elev)
-
-                takePeopleIn(elev, ELEVATOR_BODY_LIMIT)                
                 dropPeopleOut(elev)
-
+                takePeopleIn(elev, ELEVATOR_BODY_LIMIT) 
                 updateElevatorDirectionMovingUp(elev)
             }
             else if(elev.direction === "down"){
                 elev.currentFloor -= 1;
-
-                updateElevatorDirectionMovingDown(elev)
-
-                takePeopleIn(elev, ELEVATOR_BODY_LIMIT)
                 dropPeopleOut(elev)
-
+                takePeopleIn(elev, ELEVATOR_BODY_LIMIT)
                 updateElevatorDirectionMovingDown(elev)
             }
         }

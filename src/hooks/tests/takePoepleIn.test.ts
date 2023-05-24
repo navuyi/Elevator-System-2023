@@ -50,19 +50,6 @@ describe("Should not take the person because different floors", () => {
     expect(elevator.queue.filter(p => p.location === "lobby").length).toBe(1)
 })
 
-
-describe("Should not take the person because different direction", () => {
-    const elevator : I_ELEVATOR = {
-        currentFloor: 5,
-        direction: "up",
-        queue: [{ pickupFloor: 5, destinationFloor: 2, direction: "down", location: "lobby"},
-                { pickupFloor: 3, destinationFloor: 12, direction: "up", location: "elevator"}
-                ]}
-    takePeopleIn(elevator, 3)
-    expect(elevator.queue.filter(p => p.location === "elevator").length).toBe(1)
-    expect(elevator.queue.filter(p => p.location === "lobby").length).toBe(1)
-})
-
 describe("Should take all people from the floor", () => {
     const elevator : I_ELEVATOR = {
         currentFloor: 5,

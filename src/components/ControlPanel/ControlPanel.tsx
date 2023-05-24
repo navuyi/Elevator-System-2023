@@ -13,7 +13,7 @@ const ControlPanel = (props:T_PROPS) => {
     return(
         <div className={style.controlPanel}>
             <div className={style.container}>
-                <h1><h1>Control Panel</h1></h1>
+                <h1>Control Panel</h1>
                 <div className={style.wrapper}>
                     <h3>Pickup Floor: </h3> <input className={style.input} type="number" value={pickupFloor} onChange={handlePickupFloorChange}/>
                 </div>
