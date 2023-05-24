@@ -46,7 +46,7 @@ export const updateElevatorDirectionMovingDown = (elev:I_ELEVATOR) => {
 
 export const takePeopleIn = (elev:I_ELEVATOR, limit:number) => {
     elev.queue.forEach(person => {
-        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor  && elev.queue.filter(p => p.location === "elevator").length < limit){
+        if(person.location === "lobby" && elev.currentFloor === person.pickupFloor && elev.queue.filter(p => p.location === "elevator").length < limit){
             person.location = "elevator"
         } 
     })
