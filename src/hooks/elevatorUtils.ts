@@ -2,7 +2,7 @@ import { ELEVATOR_BODY_LIMIT } from "../config/config";
 import { I_ELEVATOR } from "./useElevatorSystem";
 
 
-export const updateElevatorDirection = (elev:I_ELEVATOR) => {
+export const updateElevatorDirectionIdle = (elev:I_ELEVATOR) => {
     if(elev.queue.length === 0){
         elev.direction = "idle"
     }
@@ -88,7 +88,7 @@ export const dropPeopleOut = (elev:I_ELEVATOR,) => {
 
 export const updateElevatorState = (elev:I_ELEVATOR) => {
     if(elev.direction === "idle"){
-        updateElevatorDirection(elev)
+        updateElevatorDirectionIdle(elev)
         takePeopleIn(elev, ELEVATOR_BODY_LIMIT)
     }
     else{

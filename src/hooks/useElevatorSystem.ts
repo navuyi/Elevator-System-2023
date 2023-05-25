@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { updateElevatorDirection, updateElevatorState } from "./elevatorUtils"
+import { updateElevatorState } from "./elevatorUtils"
 
 export type T_LOCATION = "elevator" | "lobby"
 export type T_DIRECTION = "idle" | "down" | "up"
@@ -66,9 +66,6 @@ export const useElevatorSystem = (numOfElevators:number) => {
             location: location,
             direction: dstFloor - pickupFloor > 0 ? "up" : "down"
         })
-
-        //updateElevatorDirection(tmp[indexOfBestElevator])
-
         setElevators(tmp)
     }
     
