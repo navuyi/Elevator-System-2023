@@ -17,20 +17,22 @@ const ElevatorCard = (props:T_PROPS) => {
     return(
         <div className={style.elevatorCard}>
             <span className={style.head}> {props.id+1} </span>
-            <div className={style.info}>
-                <div className={style.infoItem}>Floor: {props.currentFloor}/{props.totalFloor}</div>
-                <div className={style.infoItem}>Direction: {props.direction}</div>
-            </div>
-            <div className={style.queue}>
+            <div className={style.container}>
+                <div className={style.info}>
+                    <div className={style.infoItem}>Floor: {props.currentFloor}/{props.totalFloor}</div>
+                    <div className={style.infoItem}>Direction: {props.direction}</div>    
+                </div>
+                <div className={style.row}>
                 {
-                    props.queue.slice(0,5).map((person, index) => {
+                    props.queue.length > 0 ? props.queue.slice(0,6).map((person, index) => {
                         return(
                             <div className={style.queueItem} key={index} style={{backgroundColor: person.location === "elevator" ? COLOR.maximum_yellow_red : COLOR.blue_sapphire}}>
-                                {person.location === "lobby" ? person.pickupFloor : person.destinationFloor}
+                                {person.pickupFloor} {">"} {person.destinationFloor}
                             </div>
                         )
-                    })
+                    }) : "Elevator's queue is empty"
                 }
+                </div>
             </div>
         </div>
     )

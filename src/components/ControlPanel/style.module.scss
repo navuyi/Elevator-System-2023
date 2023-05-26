@@ -4,8 +4,7 @@
 .controlPanel{
     display: flex;
     flex-direction: column;
-
-    width: 70%;
+    align-self: flex-start;
 }
 
 .container{
@@ -48,6 +47,8 @@
     border-radius: 5px;
     padding: 10px 0;
 
+    user-select: none;
+
     cursor: pointer;
 }
 .button:hover{
@@ -70,6 +71,7 @@
     border-radius: 5px;
     padding: 10px 10px;
 
+    user-select: none;
     cursor: pointer;
     gap: 10px;
 }
