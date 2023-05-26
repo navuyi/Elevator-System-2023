@@ -3,13 +3,15 @@ import { T_LOCATION } from "../../hooks/useElevatorSystem";
 import style from "./style.module.scss"
 import { useControlPanel } from "./useControlPanel";
 
+import icon from "../../assets/icons/shuffle.png"
+
 type T_PROPS = {
     handlePickupOrder: (pickupFloor: number, dstFloor: number, location: T_LOCATION) => void
     updateSimulation: () => void
 }
 
 const ControlPanel = (props:T_PROPS) => {
-    const {handlePickupFloorChange, handleDestinationFloorChange, pickupFloor, destinationFloor} = useControlPanel()
+    const {handlePickupFloorChange, handleDestinationFloorChange, shuffleFloors, pickupFloor, destinationFloor} = useControlPanel()
     
     return(
         <div className={style.controlPanel}>
@@ -21,9 +23,9 @@ const ControlPanel = (props:T_PROPS) => {
                 <div className={style.wrapper}>
                     <h3>Destination Floor: </h3> <div className={style.inputWrapper}><span>{destinationFloor}</span> <input className={style.input} type="range" min={0} max={TOTAL_FLOORS} value={destinationFloor} onChange={handleDestinationFloorChange}/></div>
                 </div>
-                
-                <div className={style.wrapper}>
+                <div className={style.wrapper} style={{justifyContent: "flex-start", marginTop: "20px", gap: "10px"}}>
                     <button onClick={() => props.handlePickupOrder(pickupFloor, destinationFloor, "lobby")} className={style.button}>Enter</button>
+                    <div onClick={shuffleFloors} className={style.shuffle}> Shuffle <img className={style.shuffleImg} src={icon} alt="" /></div>
                 </div>
             </div>
             <div className={style.container}>

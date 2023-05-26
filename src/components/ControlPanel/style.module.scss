@@ -1,7 +1,6 @@
 @import "../../config/style.config.scss";
 
 
-
 .controlPanel{
     display: flex;
     flex-direction: column;
@@ -22,18 +21,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 2px;
+    margin-top: 5px;
 }
 
+
+.inputWrapper{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .input{
     width: 80%;
 }
-
-
-
-
-
-
 
 .button{
     width: 40%;
@@ -57,9 +57,32 @@
     transform: translate(1px, 2px);
 }
 
-.inputWrapper{
-    width: 50%;
+.shuffle{
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: flex-end;
+    background-color: $claret;
+
+    color: white;
+    font-size: $font-size-small;
+    font-family: ubuntu-regular;
+
+    border-radius: 5px;
+    padding: 10px 10px;
+
+    cursor: pointer;
+    gap: 10px;
 }
+.shuffle:hover{
+    filter: brightness(0.9)
+}
+.shuffle:active{
+    transform: translate(1px, 2px);
+}
+.shuffleImg{
+    width: 16px;
+    height: 16px;
+    filter: invert(1);
+}
+
+
