@@ -29,6 +29,15 @@ Elevator algorithm defines behavior of the elevator. It follows the following ru
 elevator lets people in, on each visited floor, if they requested to travel in the dirrection equal to the current direction af the elevator. For example, if the elevator is going down to 2nd floor, it will not stop on the 3rd floor where someone requested to go to the 10th floor.
 8. Elevator has body limit. People are not served if the limit would be exceeded - people are left waiting in the lobby.
 
+## Config file
+One can adjust the appliaction by changing constants in the config file located in `src/config/config.ts`
+
+```
+export const TOTAL_FLOORS = 15
+export const NUMBER_OF_ELEVATORS = 4
+export const ELEVATOR_BODY_LIMIT = 3
+```
+
 ## How to start?
 1. `git clone ...` the repository to any location
 2. run `npm install` inside repository directory in order to install required dependencies
