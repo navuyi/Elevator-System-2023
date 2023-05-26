@@ -1,8 +1,12 @@
 {
-  "name": "avsystem-vite-webapp",
+  "name": "elevator-system-2023",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": {"name": "Rafał Figlus"},
+  "repository": {
+    "url": "https://github.com/navuyi/Elevator-System-2023.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
