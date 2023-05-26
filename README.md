@@ -28,3 +28,8 @@ Elevator algorithm defines behavior of the elevator. It follows the following ru
 7. When traveling in the defined direction, the 
 elevator lets people in, on each visited floor, if they requested to travel in the dirrection equal to the current direction af the elevator. For example, if the elevator is going down to 2nd floor, it will not stop on the 3rd floor where someone requested to go to the 10th floor.
 8. Elevator has body limit. People are not served if the limit would be exceeded - people are left waiting in the lobby.
+
+## How to start?
+1. git clone the repository to any location
+2. run `npm install` inside repository directory
+3. run `npm run dev` to start dev server and enter address printed out in the console
