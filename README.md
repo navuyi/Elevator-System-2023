@@ -31,5 +31,5 @@ elevator lets people in, on each visited floor, if they requested to travel in t
 
 ## How to start?
 1. git clone the repository to any location
-2. run `npm install` inside repository directory
+2. run `npm install` inside repository directory in order to install required dependencies
 3. run `npm run dev` to start dev server and enter address printed out in the console
