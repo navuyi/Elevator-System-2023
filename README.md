@@ -8,7 +8,8 @@ Additionally, each elevator implements the LOOK algorithm, an improvement of the
 More details on the implementation in the following sections.
 
 ## User interface
-Graphical user interface allows one to interact with the simulator seamlessly. Control Panel allows for entering pickup orders.
+Graphical user interface allows one to interact with the simulator seamlessly. UI consists of a list of elevator cards representing every elevator's state on the left and a Control Panel on the right.
+Control Panel allows for entering pickup orders. 
 <img src="./src/assets/legend.png" />
 
 ## Elevator System algorithm
@@ -39,6 +40,6 @@ export const ELEVATOR_BODY_LIMIT = 3
 ```
 
 ## How to start?
-1. `git clone ...` the repository to any location
-2. run `npm install` inside repository directory in order to install required dependencies
+1. `git clone ...` the repository to any location,
+2. run `npm install` inside repository directory in order to install required dependencies,
 3. run `npm run dev` to start dev server and enter address printed out in the console
