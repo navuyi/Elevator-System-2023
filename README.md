@@ -1,5 +1,5 @@
 # Elevator System
-Web app implementation of an elevator system using React and TypeScript. The system provides a user interface (UI) for inspecting the state of elevators and dispatching pickup orders. The system is designed to handle any number of elevators and floors, which can be configured in the config file.
+Web app implementation of an elevator system using React and TypeScript. The system provides a user interface (UI) for inspecting the state of elevators and dispatching pickup orders. The system is designed to handle any number of elevators and floors, which can be configured in the config file. 
 
 The system utilizes the Shortest Seek Time First (SSTF) algorithm to handle pickup orders. The algorithm assignes orders to the designated elevator based on various criteria - minimum seek time being one of them.
 
@@ -9,7 +9,7 @@ More details on the implementation in the following sections.
 
 ## User interface
 Graphical user interface allows one to interact with the simulator seamlessly. UI consists of a list of elevator cards representing every elevator's state on the left and a Control Panel on the right.
-Control Panel allows for entering pickup orders. 
+Control Panel allows for entering new pickup orders. 
 <img src="./src/assets/legend.png" />
 
 ## Elevator System algorithm
